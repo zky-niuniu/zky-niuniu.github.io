@@ -7,7 +7,7 @@ title: About
 
 ## 教育经历
 
-南京工业大学 计算机科学与技术
+南京工业大学 计算机科学与技术 email:<zekai.yang@outlook.com> github:<https://github.com/zky-niuniu>
 
 ## 项目经历
 
