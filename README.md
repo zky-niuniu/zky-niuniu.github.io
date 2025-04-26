@@ -8,8 +8,8 @@ Demo: [https://ashishchaudhary.in/hacker-blog](https://ashishchaudhary.in/hacker
 
 1. Pagination
 2. SEO tags
-3. Archive Page
-4. About Page
+3. Myblog Page
+4. About me Page
 5. RSS (`https://base-url/atom`)
 6. Sitemap (`https://base-url/sitemap`)
 7. Google Analytics (optional)
