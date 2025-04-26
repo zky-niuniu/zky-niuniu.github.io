@@ -5,11 +5,11 @@
 @import "rouge-base16-dark";
 @import "default_colors";
 
-$body-background: $cod-grey !default;
-$body-foreground: $gallery !default;
-$header: $conifer !default;
-$blockquote-color: $silver-chalice !default;
-$blockquote-border: $dove-grey !default;
+$body-background: #261a00 !default;  /* 深橙色背景 */
+$body-foreground: #ffeed8 !default;  /* 浅橙色文字 */
+$header: #ffaa33 !default;           /* 中等橙色标题 */
+$blockquote-color: #ffcc99 !default; /* 浅橙色引用文字 */
+$blockquote-border: #ff9933 !default; /* 橙色引用边框 */
 
 body {
   margin: 0;
@@ -18,21 +18,32 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  background-attachment: fixed;  /* 背景固定，不随滚动移动 */
+  background-attachment: fixed;
   color: $body-foreground;
   font-size: 16px;
   line-height: 1.5;
   font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
+  position: relative;
+}
+
+/* 全屏半透明橙色覆盖层 */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(51, 26, 0, 0.5);
+  z-index: -1;
 }
 
 /* General & 'Reset' Stuff */
-
 .container {
   width: 90%;
   max-width: 1000px;
   margin: 0 auto;
 }
-
 
 section {
   display: block;
@@ -44,18 +55,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 li {
-  line-height: 1.4 ;
+  line-height: 1.4;
 }
 
-/* Header, <header>
-   header   - container
-   h1       - project name
-   h2       - project description
-*/
-
+/* Header */
 header {
-  background: rgba(0, 0, 0, 0.1);
-  border-bottom: 1px dashed $conifer; //header;
+  background: transparent;
+  border-bottom: 1px dashed $header;
   padding: 20px;
   margin: 0 0 40px 0;
 }
@@ -75,10 +81,10 @@ header h1 {
   text-align: center;
   font-weight: bold;
   font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
-  color: $conifer;//$header;
-  text-shadow: 0 1px 1px rgba(205, 49, 143, 0.1),
-               0 0 5px rgba(176, 26, 113, 0.1),
-               0 0 10px rgba(155, 47, 188, 0.1);
+  color: $header;
+  text-shadow: 0 1px 1px rgba(255, 170, 51, 0.3),
+               0 0 5px rgba(255, 136, 0, 0.3),
+               0 0 10px rgba(204, 102, 0, 0.3);
   letter-spacing: -1px;
   -webkit-font-smoothing: antialiased;
 }
@@ -86,18 +92,18 @@ header h1 {
 header h2 {
   font-size: 18px;
   font-weight: 300;
-  color: #ffd500;
+  color: #ffcc66;
 }
 
-/* Main Content
-*/
-
+/* Main Content */
 #main_content {
   width: 100%;
   -webkit-font-smoothing: antialiased;
+  position: relative; /* 确保内容在半透明层上方 */
 }
+
 section img {
-  max-width: 100%
+  max-width: 100%;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -105,9 +111,9 @@ h1, h2, h3, h4, h5, h6 {
   font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
   color: $header;
   letter-spacing: -0.03em;
-  text-shadow: 0 1px 1px rgba(205, 49, 143, 0.1),
-               0 0 5px rgba(176, 26, 113, 0.1),
-               0 0 10px rgba(155, 47, 188, 0.1);
+  text-shadow: 0 1px 1px rgba(255, 170, 51, 0.3),
+               0 0 5px rgba(255, 136, 0, 0.3),
+               0 0 10px rgba(204, 102, 0, 0.3);
 }
 
 #main_content h1 {
@@ -135,7 +141,7 @@ h1, h2, h3, h4, h5, h6 {
 #main_content h6 {
   font-size: 12px;
   text-transform: uppercase;
-  color: #a90d0d;
+  color: #ff6600;
   margin: 0 0 5px 0;
 }
 
@@ -145,7 +151,7 @@ dt {
 }
 
 ul li {
-  list-style-image:url('../assets/bullet.png');
+  list-style-image: url('../assets/bullet.png');
 }
 
 blockquote {
@@ -155,11 +161,11 @@ blockquote {
 }
 
 pre {
-  background: rgba(19, 126, 184, 0.9);
+  background: rgba(153, 51, 0, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.15);
   padding: 10px;
   font-size: 16px;
-  color: #e853de;
+  color: #ffe5cc;
   border-radius: 2px;
   text-wrap: normal;
   overflow: auto;
@@ -167,11 +173,11 @@ pre {
 }
 
 code.highlighter-rouge {
-  background: rgba(0,0,0,0.9);
+  background: rgba(77, 26, 0, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.15);
   padding: 0px 3px;
   margin: 0px -3px;
-  color: #aa759f;
+  color: #ffd699;
   border-radius: 2px;
 }
 
@@ -182,7 +188,7 @@ table {
 
 th {
   text-align: left;
-  border-bottom: 1px dashed #a822d589;
+  border-bottom: 1px dashed #ff8000;
   padding: 5px 10px;
 }
 
@@ -193,32 +199,30 @@ td {
 hr {
   height: 0;
   border: 0;
-  border-bottom: 1px dashed #a822d589;
-  color: #a822d589;
+  border-bottom: 1px dashed #ff8000;
+  color: #ff8000;
 }
 
-/* Buttons
-*/
-
+/* Buttons */
 .btn {
   display: inline-block;
-  background: -webkit-linear-gradient(top, rgba(40, 40, 40, 0.3), rgba(35, 35, 35, 0.3) 50%, rgba(10, 10, 10, 0.3) 50%, rgba(0, 0, 0, 0.3));
+  background: -webkit-linear-gradient(top, rgba(102, 51, 0, 0.3), rgba(77, 38, 0, 0.3) 50%, rgba(51, 26, 0, 0.3) 50%, rgba(26, 13, 0, 0.3));
   padding: 8px 18px;
   border-radius: 50px;
-  border: 2px solid rgba(0, 0, 0, 0.7);
-  border-bottom: 2px solid rgba(0, 0, 0, 0.7);
-  border-top: 2px solid rgba(0, 0, 0, 1);
-  color: rgba(255, 255, 255, 0.8);
+  border: 2px solid rgba(51, 26, 0, 0.7);
+  border-bottom: 2px solid rgba(51, 26, 0, 0.7);
+  border-top: 2px solid rgba(51, 26, 0, 1);
+  color: rgba(255, 230, 204, 0.8);
   font-family: Helvetica, Arial, sans-serif;
   font-weight: bold;
   font-size: 13px;
   text-decoration: none;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.75);
+  text-shadow: 0 -1px 0 rgba(51, 26, 0, 0.75);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .btn:hover {
-  background: -webkit-linear-gradient(top, rgba(40, 40, 40, 0.6), rgba(35, 35, 35, 0.6) 50%, rgba(10, 10, 10, 0.8) 50%, rgba(0, 0, 0, 0.8));
+  background: -webkit-linear-gradient(top, rgba(102, 51, 0, 0.6), rgba(77, 38, 0, 0.6) 50%, rgba(51, 26, 0, 0.8) 50%, rgba(26, 13, 0, 0.8));
 }
 
 .btn .icon {
@@ -234,38 +238,33 @@ hr {
   background: url("../images/blacktocat.png") 0 0 no-repeat;
 }
 
-/* Links
-   a, a:hover, a:visited
-*/
-
+/* Links */
 a {
-  color: #63c0f5;
-  text-shadow: 0 0 5px rgba(104, 182, 255, 0.5);
+  color: #ff9933;
+  text-shadow: 0 0 5px rgba(255, 153, 51, 0.5);
 }
 
 a:active, a:focus {
   outline: 0;
   border: none;
-  -moz-outline-style: none
+  -moz-outline-style: none;
 }
 
 /* Clearfix */
-
 .cf:before, .cf:after {
-  content:"";
-  display:table;
+  content: "";
+  display: table;
 }
 
 .cf:after {
-  clear:both;
+  clear: both;
 }
 
 .cf {
-  zoom:1;
+  zoom: 1;
 }
 
 /* Make footer stick to bottom */
-
 .pagination, footer {
   height: 50px;
   line-height: 50px;
