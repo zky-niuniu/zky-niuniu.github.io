@@ -76,9 +76,9 @@ header h1 {
   font-weight: bold;
   font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
   color: $conifer;//$header;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1),
-               0 0 5px rgba(181, 232, 83, 0.1),
-               0 0 10px rgba(181, 232, 83, 0.1);
+  text-shadow: 0 1px 1px rgba(205, 49, 143, 0.1),
+               0 0 5px rgba(176, 26, 113, 0.1),
+               0 0 10px rgba(155, 47, 188, 0.1);
   letter-spacing: -1px;
   -webkit-font-smoothing: antialiased;
 }
@@ -86,7 +86,7 @@ header h1 {
 header h2 {
   font-size: 18px;
   font-weight: 300;
-  color: #666;
+  color: #ffd500;
 }
 
 /* Main Content
@@ -105,9 +105,9 @@ h1, h2, h3, h4, h5, h6 {
   font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
   color: $header;
   letter-spacing: -0.03em;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1),
-               0 0 5px rgba(181, 232, 83, 0.1),
-               0 0 10px rgba(181, 232, 83, 0.1);
+  text-shadow: 0 1px 1px rgba(205, 49, 143, 0.1),
+               0 0 5px rgba(176, 26, 113, 0.1),
+               0 0 10px rgba(155, 47, 188, 0.1);
 }
 
 #main_content h1 {
@@ -135,7 +135,7 @@ h1, h2, h3, h4, h5, h6 {
 #main_content h6 {
   font-size: 12px;
   text-transform: uppercase;
-  color: #999;
+  color: #a90d0d;
   margin: 0 0 5px 0;
 }
 
@@ -155,11 +155,11 @@ blockquote {
 }
 
 pre {
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(19, 126, 184, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.15);
   padding: 10px;
   font-size: 16px;
-  color: #b5e853;
+  color: #e853de;
   border-radius: 2px;
   text-wrap: normal;
   overflow: auto;
@@ -182,7 +182,7 @@ table {
 
 th {
   text-align: left;
-  border-bottom: 1px dashed #b5e853;
+  border-bottom: 1px dashed #a822d589;
   padding: 5px 10px;
 }
 
@@ -193,8 +193,8 @@ td {
 hr {
   height: 0;
   border: 0;
-  border-bottom: 1px dashed #b5e853;
-  color: #b5e853;
+  border-bottom: 1px dashed #a822d589;
+  color: #a822d589;
 }
 
 /* Buttons
