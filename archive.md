@@ -1,6 +1,6 @@
 ---
 layout: page
-title: myblog
+title: archive
 ---
 
 <section>
