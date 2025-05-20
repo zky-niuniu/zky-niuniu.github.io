@@ -48,6 +48,7 @@ model.train(data="/data/coding/rec/data.yaml",
 | negative | FP   | TN    |
 
 YOLO中有如下的阈值：
+
 置信度阈值：对每个预测框的置信度分数的标准。模型会为每个预测框提供一个置信度值（例如目标的存在概率），表示模型认为该框包含目标的信心有多大。一般都是pr(object)与IoU的乘积，Pr(Object) 是边界框内存在对象的概率。如果边界框内有对象，则Pr(Object)=1；反之，则Pr(Object)=0。
 
 IoU阈值：IoU衡量的是两个区域重叠的程度。预测框与真实框的IoU大于等于某个阈值时，才认为这个预测是有效的，工业领域一般为0.5。IOU方法比较简单直观，计算两个边界框的交集与并集之间的比值。当IoU接近1时，意味着两个边界框高度重叠，即预测的位置与真实位置高度一致；当IoU接近0时，表示两个边界框几乎没有重叠，即预测偏离真实位置很大。 IoU的计算方式如下：确定两个边界框的坐标表示形式。计算两个边界框的交集面积：将两个边界框的区域进行重叠，计算重叠部分的面积。计算两个边界框的并集面积：将两个边界框的区域进行合并，计算合并后的面积。计算IoU：将交集面积除以并集面积，得到IoU的值。
@@ -60,6 +61,7 @@ R：召回率，对类A来说：R = TP / TP+FN
 这里插入举个例子以便理解：某个模型要对动物进行分类，分为猫与非猫两类。样本中猫有350份，非猫有150份。预测出了400份被认为是猫，其中，正确的有300份，错误的有100份。则P = 300 / 400 = 0.75，R = 300 / 350 ≈ 0.86。接上文，提高置信度阈值会导致FP减少，TP可能减少，从而精确度上升，召回率下降。降低置信度阈值导致TP增加，FP也增加从而召回率上升，精确度下降。提高IoU阈值会导致TP减少（定位要求更严）从而精确度和召回率均可能下降。
 
 下面是几种综合性的评判方法：
+
 F1 score：是P与R的调和平均，F1 = 2PR / (P + R)。相应的也有F2、F0.5，这取决于应用场景中你认为召回率和精确度哪个更重要。
 
 P-R曲线：这个精确率-召回率曲线，是以召回率为横轴，精确率为纵轴，将精确率和召回率连接起来形成一条曲线。
@@ -142,6 +144,7 @@ model.train(data="/data/coding/rec/data.yaml",
 # 第三次实验
 添加注意力机制后训练：
 注意力机制一直是很热门的优化方法，我们也尝试了这个方法尝试对自己的模型优化，我们首先是对YOLO的代码进行了一些改动，ultralytics/nn目录下，建SEAttention.py文件，在ultralytics/nn/tasks.py中需要加入SEAttention文件，在ultralytics/nn/task.py中对parse_model函数进行调整，加入SE注意力模型解析，通过SEAtt_yolov8.yaml在我们的工程里面加入注意力机制到骨干网最后部分。
+
 其中SEAttention.py如下：
 ```python
 import numpy as np
@@ -277,7 +280,8 @@ if __name__ == '__main__':
 结果依然是不错的，但是mAP50-95就有些不尽如人意，但是我们在部署此模型到边缘设备时，这种方法给FPS带来了巨大的提升。应该是SE模块主要由全局平均池化（GAP）+ 两个全连接层（FC）组成，计算量远小于卷积层。而边缘设备（如Jetson、树莓派）的CPU/GPU更适合执行轻量级FC运算，而SE的GAP+FC计算效率较高。且SE模块默认使用压缩比（reduction ratio，如16），大幅减少FC层的参数量。例如：输入通道数=256 → 中间层=256/16=16 → 输出通道数=256，计算量远低于普通卷积。总之就是两句话：一是动态进行特征选择调整特征权重，抑制了不重要特征，减少了无效的传播，也就减少了冗余计算。二是用更轻量级的结构替代了原来的复杂结构。
 # 第四次实验
 主干网络替换为FasterNet是在超低性能设备上部署模型的常规方法：
-将 FasterNet 的核心代码添加到 ultralytics/nn/modules/bock.py 中，并且在该文件的最上方引用‘BasicStage’、‘PatchEmbed_FasterNet’、‘PatchMerging_FasterNet’模块。在ultralytics/nn/modules/init.py与ultralytics/nn/tasks.py中添加上述三个模块，同时在tasks.py的parse_model解析函数中添加FasterNet的解析模块，在self.model.modules函数后添加激活FasterNet的模块。最后添加创建yolov8-FasterNet.yaml文件，
+将 FasterNet 的核心代码添加到 ultralytics/nn/modules/bock.py 中，并且在该文件的最上方引用‘BasicStage’、‘PatchEmbed_FasterNet’、‘PatchMerging_FasterNet’模块。在ultralytics/nn/modules/init.py与ultralytics/nn/tasks.py中添加上述三个模块，同时在tasks.py的parse_model解析函数中添加FasterNet的解析模块，在self.model.modules函数后添加激活FasterNet的模块。最后添加创建yolov8-FasterNet.yaml文件。
+
 bock.py：
 ```python
 __all__ = (
