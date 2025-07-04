@@ -104,7 +104,7 @@ str4.assign(10,'2');
 string str1="c++";
 string str2="hello";
 //+=重载
-str1+="你好"；
+str1+="你好";
 str1+=':';
 str1+=str2;
 //append

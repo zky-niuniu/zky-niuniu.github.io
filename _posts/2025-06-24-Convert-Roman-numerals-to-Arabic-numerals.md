@@ -1,4 +1,4 @@
-# 2025-06-24-Convert-Roman-numerals-to-Arabic-numerals
+# Convert Roman numerals to Arabic numerals
 leetcode第13题就是罗马数字转阿拉伯数字。这道题目的思路很简单，通常情况下，罗马数字中小的数字在大的数字的右边，所以我们将每个字符视作一个单独的值，若一个数字右侧的数字比它大，则将该数字的符号取反。
 ```
 举例：X+（−I）+V=10−1+5=14。

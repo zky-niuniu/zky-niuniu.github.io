@@ -1,4 +1,4 @@
-# How-to-configure-your-MacBook
+# How to configure your MacBook
 
 暑期正逢入学季与毕业季，肯定有很多购入新电脑的同学，MacBook以其时尚的外形受到很多人的亲睐（我一直很想要但是财力所限加上不好意思和父母提起，直到大学的最后一年才入手一个），但是其类Unix系统在使用中对新手来说并不是很友好。诚然对大部分工科学生来说MacBook是一个不好的选择，因为有很多工科软件并没有对Mac进行适配。但是对cs科班的学生来说，选择了Mac，就选择了更丰富的大学生活：Enjoy the process of configuring your personal computer！（如果从大一就有一台Mac我会不会变成computer science高手？）
 我们激活好电脑，进行了一系列基础配置后，我们就要开始配置如下的几类基础的模块：包管理器、集成开发环境、数据库软件、版本控制软件、网络软件。
