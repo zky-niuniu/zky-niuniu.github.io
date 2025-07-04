@@ -1,11 +1,5 @@
----
-attachments: [Clipboard_2025-06-17-20-26-30.png, Clipboard_2025-06-17-21-27-36.png, Clipboard_2025-06-22-14-56-46.png, Clipboard_2025-06-22-15-25-21.png]
-title: 2025-06-21-How-to-configure-your-MacBook
-created: '2025-06-15T04:31:36.148Z'
-modified: '2025-06-26T12:13:31.551Z'
----
+# How-to-configure-your-MacBook
 
-# 2025-06-21-How-to-configure-your-MacBook
 暑期正逢入学季与毕业季，肯定有很多购入新电脑的同学，MacBook以其时尚的外形受到很多人的亲睐（我一直很想要但是财力所限加上不好意思和父母提起，直到大学的最后一年才入手一个），但是其类Unix系统在使用中对新手来说并不是很友好。诚然对大部分工科学生来说MacBook是一个不好的选择，因为有很多工科软件并没有对Mac进行适配。但是对cs科班的学生来说，选择了Mac，就选择了更丰富的大学生活：Enjoy the process of configuring your personal computer！（如果从大一就有一台Mac我会不会变成computer science高手？）
 我们激活好电脑，进行了一系列基础配置后，我们就要开始配置如下的几类基础的模块：包管理器、集成开发环境、数据库软件、版本控制软件、网络软件。
 ## clash
@@ -52,7 +46,7 @@ brew install --cask iterm2
 接下来：
 配置iTerm2为默认终端：右上角状态栏里iTerm2-->Make iTerm2 default Term
 设置主题：右上角状态栏里iTerm2-->Settings-->Profiles，里面的text、colors、window可以设置丰富的个性化主题。如下这是我的主题：
-![Clipboard_2025-06-17-20-26-30](assets/Clipboard_2025-06-17-20-26-30.png)
+![Clipboard-1](assets/Clipboard-1.png)
 iTerm2可以启用分屏，用cmd D和cmd shift D分别启用水平分屏与横向分屏，它有如下常用的快捷键：
 
 新建标签页：Cmd + T
@@ -108,7 +102,7 @@ Chinese (Simplified) (简体中文) Language Pack：汉化不得不装。
 Code Runner：运行代码的插件。
 Cloudmusic：摸鱼，不得不摸。
 background：个性化，必须装上。
-![Clipboard_2025-06-17-21-27-36](assets/Clipboard_2025-06-17-21-27-36.png)
+![Clipboard-1](assets/Clipboard-1.png)
 这就是我美丽的vscode，工欲善其事，必先利其器，没有一个漂亮的工具你的coding也是不舒服的。
 当然我们的Mac系统自带python，不过这个python我们不想用，我还是觉得用miniconda比较好。
 
@@ -129,7 +123,7 @@ git config -l
 ssh-keygen -t rsa -C  "你上一步设置的邮箱"
 ~~~
 一直回车 ,回车到啥也不出为止,然后打开 id_rsa.pub 这个文件，然后打开github ,登录好你的账号如下：
-![Clipboard_2025-06-22-14-56-46](assets/Clipboard_2025-06-22-14-56-46.png)
+![Clipboard-3](assets/Clipboard-3.png)
 
 在设置中找到ssh相关内容，add new keys，Title可以随便设置，将文件内容完整复制到下方的框中，在终端输入如下内容：
 
@@ -146,7 +140,7 @@ sudo xattr -r -d com.apple.quarantine /Applications/YourApplicationName.app
 # node
 接下来我们进入最重要的java工程的配置，我们一般需要配置node、maven、jdk、tomcat，集成开发环境选择Idea，如果有小程序开发需求，我们可以安装webstorm，这都有非商业免费版。
 首先我们配置node，我们前往官方网站， https://nodejs.org/en/ 。
-![Clipboard_2025-06-22-15-25-21](assets/Clipboard_2025-06-22-15-25-21.png)
+![Clipboard-4](assets/Clipboard-4.png)
 选择你合适版本的，用npm -v与node -v验证你安装是否成功，一般而言都是没有问题的。
 
 # maven
