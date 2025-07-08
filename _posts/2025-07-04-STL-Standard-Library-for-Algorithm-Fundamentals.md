@@ -156,7 +156,7 @@ string str1="hello";
 str1.substr(1,3);
 ~~~
 ## vector容器
-动态数组
+动态数组。
 ### 构造
 ~~~c++
 vector<Type>v;
@@ -232,7 +232,7 @@ for(int i=0;i<100000;i++)
 v.reserve(100000);
 ~~~
 ## deque容器
-双端数组，可以对头尾进行插入删除操作
+双端数组，可以对头尾进行插入删除操作。
 ### 构造
 ~~~c++
 deque<int>d1;
@@ -283,7 +283,7 @@ sort(d.begin(),d.end());
 ~~~
 ## stack容器
 ### 常用接口
-先进后出的数据结构,弹匣
+先进后出的数据结构,弹匣。
 ~~~c++
 stack<int>stk;
 //入
@@ -299,7 +299,7 @@ stk.empty();
 ~~~
 ## queue容器
 ### 常用接口
-先进先出
+先进先出。
 ~~~c++
 queue<int>que;
 //入队
@@ -370,7 +370,7 @@ l.reserve();
 l.sort();
 ~~~
 ## set容器
-自动排序，不重复，二叉树实现
+自动排序，不重复，二叉树实现。
 ### 构造赋值
 ~~~c++
 set<int>s;
@@ -469,9 +469,10 @@ s.insert(p3);
 s.insert(p4);
 ~~~
 ## map容器
-所有元素都是pair，第一个元素是key，第二个是value
-所有自动排序，二叉树实现，快速查找
-map不可重复key，multimap可以重复key
+所有元素都是pair，第一个元素是key，第二个是value。
+所有自动排序，二叉树实现，快速查找。
+map不可重复key，multimap可以重复key。
+
 ### 构造、赋值
 ~~~c++
 map<int,int>m;
