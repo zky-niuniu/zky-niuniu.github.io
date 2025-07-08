@@ -1,6 +1,6 @@
 ---
 layout: page
-title: 我的相册
+title: Gallery
 ---
 
 <style>
