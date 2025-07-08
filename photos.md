@@ -1,7 +1,6 @@
 ---
 layout: page
 title: 相册
-permalink: /photos.html
 ---
 
 # 我的相册
