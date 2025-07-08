@@ -1,11 +1,56 @@
 <footer>
-  <!-- 音乐播放器 -->
-  <div style="margin: 20px 0;">
-    <audio controls style="width: 100%; background: rgba(51, 26, 0, 0.7); border: 1px solid #ff9933; border-radius: 4px; padding: 8px;">
-      <source src="{{ '/assets/music/走进新时代.mp3' | prepend: site.baseurl | replace: '//', '/' }}" type="audio/mpeg">
-      您的浏览器不支持音频播放
-    </audio>
+  <!-- 现代圆形音乐播放器 -->
+  <div style="position: fixed; bottom: 30px; left: 30px; z-index: 1000;">
+    <div class="music-player" style="width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #ff9933 0%, #ff6600 100%); position: relative; box-shadow: 0 4px 15px rgba(255, 102, 0, 0.3); cursor: pointer;">
+      <!-- 环形进度条 -->
+      <svg width="80" height="80" viewBox="0 0 100 100" style="position: absolute; top: 0; left: 0;">
+        <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="4"/>
+        <circle id="progress-ring" cx="50" cy="50" r="45" fill="none" stroke="#ffffff" stroke-width="4" stroke-dasharray="283" stroke-dashoffset="283" stroke-linecap="round" transform="rotate(-90 50 50)"/>
+      </svg>
+      <!-- 三角形播放按钮 -->
+      <div class="play-button" style="width: 0; height: 0; border-style: solid; border-width: 15px 0 15px 25px; border-color: transparent transparent transparent #ffffff; position: absolute; top: 50%; left: 50%; transform: translate(-45%, -50%);"></div>
+      <audio id="custom-audio" style="display: none;">
+        <source src="{{ '/assets/music/走进新时代.mp3' | prepend: site.baseurl | replace: '//', '/' }}" type="audio/mpeg">
+      </audio>
+    </div>
   </div>
+  <script>
+    const audio = document.getElementById('custom-audio');
+    const player = document.querySelector('.music-player');
+    const playButton = document.querySelector('.play-button');
+    const progressRing = document.getElementById('progress-ring');
+    const radius = progressRing.r.baseVal.value;
+    const circumference = radius * 2 * Math.PI;
+    progressRing.style.strokeDasharray = `${circumference} ${circumference}`;
+    progressRing.style.strokeDashoffset = circumference;
+
+    function setProgress(percent) {
+      const offset = circumference - percent / 100 * circumference;
+      progressRing.style.strokeDashoffset = offset;
+    }
+
+    player.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playButton.style.borderWidth = '0';
+        playButton.style.width = '10px';
+        playButton.style.height = '15px';
+        playButton.style.borderLeft = '5px solid #ffffff';
+        playButton.style.borderRight = '5px solid #ffffff';
+      } else {
+        audio.pause();
+        playButton.style.borderWidth = '15px 0 15px 25px';
+        playButton.style.borderColor = 'transparent transparent transparent #ffffff';
+        playButton.style.borderLeft = 'none';
+        playButton.style.borderRight = 'none';
+      }
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      const percent = (audio.currentTime / audio.duration) * 100;
+      setProgress(percent);
+    });
+  </script>
 
   <a href="https://creativecommons.org/licenses/by-nc/3.0/deed.en_US">
     <span>
