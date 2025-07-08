@@ -51,8 +51,10 @@
         currentTrackIndex = index;
         audio.src = musicPlaylist[index];
         audio.load();
-        // 重置进度条
+        // 重置进度条和播放时间
         setProgress(0);
+        audio.currentTime = 0;
+        localStorage.setItem('audioCurrentTime', 0);
       }
 
       player.addEventListener('click', () => {
