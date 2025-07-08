@@ -1,4 +1,12 @@
 <footer>
+  <!-- 音乐播放器 -->
+  <div style="margin: 20px 0;">
+    <audio controls style="width: 100%; background: rgba(51, 26, 0, 0.7); border: 1px solid #ff9933; border-radius: 4px; padding: 8px;">
+      <source src="{{ '/assets/music/sample.mp3' | prepend: site.baseurl | replace: '//', '/' }}" type="audio/mpeg">
+      您的浏览器不支持音频播放
+    </audio>
+  </div>
+
   <a href="https://creativecommons.org/licenses/by-nc/3.0/deed.en_US">
     <span>
         <b>{{ site.owner}}</b>
