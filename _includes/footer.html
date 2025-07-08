@@ -9,7 +9,7 @@
       </svg>
       <!-- 三角形播放按钮 -->
       <div class="play-button" style="width: 0; height: 0; border-style: solid; border-width: 15px 0 15px 25px; border-color: transparent transparent transparent #ffffff; position: absolute; top: 50%; left: 50%; transform: translate(-45%, -50%);"></div>
-      <audio id="custom-audio" style="display: none;">
+      <audio id="custom-audio" style="display: none;" preload="metadata">
         <source src="{{ '/assets/music/走进新时代.mp3' | prepend: site.baseurl | replace: '//', '/' }}" type="audio/mpeg">
       </audio>
     </div>
@@ -48,7 +48,44 @@
 
     audio.addEventListener('timeupdate', () => {
       const percent = (audio.currentTime / audio.duration) * 100;
-      setProgress(percent);
+        setProgress(percent);
+    });
+
+    // 页面加载时恢复播放状态
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedTime = localStorage.getItem('audioCurrentTime');
+      const wasPlaying = localStorage.getItem('audioPlaying') === 'true';
+
+      // 等待音频元数据加载完成后再设置播放时间
+      audio.addEventListener('loadedmetadata', () => {
+        if (savedTime && !isNaN(parseFloat(savedTime)) && audio.duration) {
+          // 确保不超过音频总时长
+          audio.currentTime = Math.min(parseFloat(savedTime), audio.duration);
+        }
+      });
+
+      if (wasPlaying) {
+        audio.play().catch(e => {
+          console.log('Auto-play prevented:', e);
+          // 自动播放被阻止时重置按钮状态
+          playButton.style.borderWidth = '15px 0 15px 25px';
+          playButton.style.borderColor = 'transparent transparent transparent #ffffff';
+          playButton.style.borderLeft = 'none';
+          playButton.style.borderRight = 'none';
+        });
+        // 更新播放按钮状态
+        playButton.style.borderWidth = '0';
+        playButton.style.width = '10px';
+        playButton.style.height = '15px';
+        playButton.style.borderLeft = '5px solid #ffffff';
+        playButton.style.borderRight = '5px solid #ffffff';
+      }
+    });
+
+    // 页面卸载前保存播放状态
+    window.addEventListener('beforeunload', () => {
+      localStorage.setItem('audioCurrentTime', audio.currentTime);
+      localStorage.setItem('audioPlaying', !audio.paused);
     });
   </script>
 
