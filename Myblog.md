@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Myblog
+permalink: /myblog.html
 ---
 
 <section>

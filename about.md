@@ -1,6 +1,7 @@
 ---
 layout: page
 title: About me
+permalink: /about.html
 ---
 
 # Something about me
@@ -23,6 +24,3 @@ title: About me
 ## 我的爱好
   作为计算机学生，我热爱技术，乐于学习新知识，不断提升自己的能力中。
 
-## 相册
-
-[查看我的相册](/photos.html)
