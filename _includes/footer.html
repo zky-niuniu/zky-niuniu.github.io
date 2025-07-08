@@ -9,9 +9,7 @@
       </svg>
       <!-- 三角形播放按钮 -->
       <div class="play-button" style="width: 0; height: 0; border-style: solid; border-width: 15px 0 15px 25px; border-color: transparent transparent transparent #ffffff; position: absolute; top: 50%; left: 50%; transform: translate(-45%, -50%);"></div>
-      <audio id="custom-audio" style="display: none;" preload="metadata">
-        <source src="{{ '/assets/music/走进新时代.mp3' | prepend: site.baseurl | replace: '//', '/' }}" type="audio/mpeg">
-      </audio>
+      <audio id="custom-audio" style="display: none;" preload="metadata"></audio>
     </div>
   </div>
   <script>
@@ -24,69 +22,124 @@
     progressRing.style.strokeDasharray = `${circumference} ${circumference}`;
     progressRing.style.strokeDashoffset = circumference;
 
+    // 音乐列表 - 新增音乐时需要手动添加到这里
+    const musicPlaylist = [
+        '{{ '/assets/music/走进新时代.mp3' | prepend: site.baseurl | replace: '//', '/' }}'
+        // 添加更多音乐文件路径，例如:
+        // '{{ '/assets/music/青春舞曲.mp3' | prepend: site.baseurl | replace: '//', '/' }}',
+        // '{{ '/assets/music/一等情事.mp3' | prepend: site.baseurl | replace: '//', '/' }}'
+    ];
+    let currentTrackIndex = 0;
+
     function setProgress(percent) {
-      const offset = circumference - percent / 100 * circumference;
-      progressRing.style.strokeDashoffset = offset;
-    }
-
-    player.addEventListener('click', () => {
-      if (audio.paused) {
-        audio.play();
-        playButton.style.borderWidth = '0';
-        playButton.style.width = '10px';
-        playButton.style.height = '15px';
-        playButton.style.borderLeft = '5px solid #ffffff';
-        playButton.style.borderRight = '5px solid #ffffff';
-      } else {
-        audio.pause();
-        playButton.style.borderWidth = '15px 0 15px 25px';
-        playButton.style.borderColor = 'transparent transparent transparent #ffffff';
-        playButton.style.borderLeft = 'none';
-        playButton.style.borderRight = 'none';
+        const offset = circumference - percent / 100 * circumference;
+        progressRing.style.strokeDashoffset = offset;
       }
-    });
 
-    audio.addEventListener('timeupdate', () => {
-      const percent = (audio.currentTime / audio.duration) * 100;
-        setProgress(percent);
-    });
+      // 获取随机曲目索引，避免重复播放同一首
+      function getRandomTrack() {
+        if (musicPlaylist.length <= 1) return 0;
+        let randomIndex;
+        do {
+          randomIndex = Math.floor(Math.random() * musicPlaylist.length);
+        } while (randomIndex === currentTrackIndex);
+        return randomIndex;
+      }
 
-    // 页面加载时恢复播放状态
-    document.addEventListener('DOMContentLoaded', () => {
-      const savedTime = localStorage.getItem('audioCurrentTime');
-      const wasPlaying = localStorage.getItem('audioPlaying') === 'true';
+      // 加载并播放指定索引的曲目
+      function loadTrack(index) {
+        currentTrackIndex = index;
+        audio.src = musicPlaylist[index];
+        audio.load();
+        // 重置进度条
+        setProgress(0);
+      }
 
-      // 等待音频元数据加载完成后再设置播放时间
-      audio.addEventListener('loadedmetadata', () => {
-        if (savedTime && !isNaN(parseFloat(savedTime)) && audio.duration) {
-          // 确保不超过音频总时长
-          audio.currentTime = Math.min(parseFloat(savedTime), audio.duration);
-        }
-      });
-
-      if (wasPlaying) {
-        audio.play().catch(e => {
-          console.log('Auto-play prevented:', e);
-          // 自动播放被阻止时重置按钮状态
+      player.addEventListener('click', () => {
+        if (audio.paused) {
+          if (!audio.src) {
+            // 首次点击时加载随机曲目
+            loadTrack(getRandomTrack());
+          }
+          audio.play().catch(e => {
+            console.log('Play prevented:', e);
+            // 播放失败时重置按钮状态
+            playButton.style.borderWidth = '15px 0 15px 25px';
+            playButton.style.borderColor = 'transparent transparent transparent #ffffff';
+          });
+          playButton.style.borderWidth = '0';
+          playButton.style.width = '10px';
+          playButton.style.height = '15px';
+          playButton.style.borderLeft = '5px solid #ffffff';
+          playButton.style.borderRight = '5px solid #ffffff';
+        } else {
+          audio.pause();
           playButton.style.borderWidth = '15px 0 15px 25px';
           playButton.style.borderColor = 'transparent transparent transparent #ffffff';
           playButton.style.borderLeft = 'none';
           playButton.style.borderRight = 'none';
-        });
+        }
+      });
+
+      audio.addEventListener('timeupdate', () => {
+        const percent = (audio.currentTime / audio.duration) * 100;
+        setProgress(percent);
+      });
+
+      // 当前曲目播放结束后自动播放下一首随机曲目
+      audio.addEventListener('ended', () => {
+        const nextIndex = getRandomTrack();
+        loadTrack(nextIndex);
+        audio.play();
         // 更新播放按钮状态
         playButton.style.borderWidth = '0';
         playButton.style.width = '10px';
         playButton.style.height = '15px';
         playButton.style.borderLeft = '5px solid #ffffff';
         playButton.style.borderRight = '5px solid #ffffff';
-      }
-    });
+      });
 
-    // 页面卸载前保存播放状态
-    window.addEventListener('beforeunload', () => {
-      localStorage.setItem('audioCurrentTime', audio.currentTime);
-      localStorage.setItem('audioPlaying', !audio.paused);
-    });
+      // 页面加载时初始化播放状态
+      document.addEventListener('DOMContentLoaded', () => {
+        const wasPlaying = localStorage.getItem('audioPlaying') === 'true';
+
+        // 从localStorage加载保存的曲目索引或使用随机曲目
+        const savedTrackIndex = localStorage.getItem('currentTrackIndex');
+        let initialIndex;
+        if (savedTrackIndex && !isNaN(parseInt(savedTrackIndex)) && parseInt(savedTrackIndex) < musicPlaylist.length) {
+          initialIndex = parseInt(savedTrackIndex);
+        } else {
+          initialIndex = getRandomTrack();
+        }
+        loadTrack(initialIndex);
+
+        audio.addEventListener('loadedmetadata', () => {
+          const savedTime = localStorage.getItem('audioCurrentTime');
+          if (savedTime && !isNaN(parseFloat(savedTime)) && audio.duration) {
+            audio.currentTime = Math.min(parseFloat(savedTime), audio.duration);
+          }
+
+          if (wasPlaying) {
+            audio.play().catch(e => {
+              console.log('Auto-play prevented:', e);
+              playButton.style.borderWidth = '15px 0 15px 25px';
+              playButton.style.borderColor = 'transparent transparent transparent #ffffff';
+            });
+            playButton.style.borderWidth = '0';
+            playButton.style.width = '10px';
+            playButton.style.height = '15px';
+            playButton.style.borderLeft = '5px solid #ffffff';
+            playButton.style.borderRight = '5px solid #ffffff';
+          }
+        });
+      });
+
+      // 页面卸载前保存播放状态
+      window.addEventListener('beforeunload', () => {
+        localStorage.setItem('audioCurrentTime', audio.currentTime);
+        localStorage.setItem('audioPlaying', !audio.paused);
+        localStorage.setItem('currentTrackIndex', currentTrackIndex);
+      });
   </script>
 
   <a href="https://creativecommons.org/licenses/by-nc/3.0/deed.en_US">
