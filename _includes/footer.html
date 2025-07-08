@@ -137,7 +137,7 @@
       });
 
       // 页面卸载前保存播放状态
-      window.addEventListener('beforeunload', () => {
+        window.addEventListener('beforeunload', () => {
         localStorage.setItem('audioCurrentTime', audio.currentTime);
         localStorage.setItem('audioPlaying', !audio.paused);
         localStorage.setItem('currentTrackIndex', currentTrackIndex);
